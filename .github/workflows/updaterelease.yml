@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       #- uses: actions/checkout@v3
-      - run: gh release upload ${{ github.event.tag_name }} testfile.txt
+      - run: echo ${{ github.event }}
