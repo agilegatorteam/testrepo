@@ -2,16 +2,14 @@ name: Update Releases
 on:
   release:
     types: [published]
-    
 jobs:
   build_asset:
     runs-on: ubuntu-latest
     steps:
-      - run: pwd
-      - run: ls -l
       - uses: actions/checkout@v3
-      - run: pwd
-      - run: ls -l
-      - run: gh release upload ${{ github.event.release.tag_name }} testfile.txt
+      - run: |
+          project_path=$(dirname ${{ github.event.release.tag_name }})  # remove version
+          tar -czf source_dist.tar.gz $project_path
+      - run: gh release upload ${{ github.event.release.tag_name }} source_dist.tar.gz
         env:
           GH_TOKEN: ${{ github.token }}
